@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCPHub Thumbnail Converter</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f8fafc;
+        }
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #1e293b;
+            margin-bottom: 20px;
+        }
+        .thumbnail-preview {
+            border: 2px dashed #e2e8f0;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+            background: #f8fafc;
+        }
+        .thumbnail-preview img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .download-btn {
+            background: linear-gradient(135deg, #3b82f6, #6366f1);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin: 10px 5px;
+        }
+        .download-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 15px -3px rgba(59, 130, 246, 0.4);
+        }
+        .download-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .instructions {
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            border-radius: 8px;
+            padding: 16px;
+            margin: 20px 0;
+        }
+        .instructions h3 {
+            color: #1e40af;
+            margin-top: 0;
+        }
+        .quality-controls {
+            margin: 20px 0;
+            padding: 16px;
+            background: #f1f5f9;
+            border-radius: 8px;
+        }
+        .quality-controls label {
+            display: block;
+            margin: 10px 0;
+            font-weight: 500;
+        }
+        .quality-controls input, .quality-controls select {
+            margin-left: 10px;
+            padding: 4px 8px;
+            border: 1px solid #d1d5db;
+            border-radius: 4px;
+        }
+        #canvas {
+            display: none;
+        }
+        .size-info {
+            color: #6b7280;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🖼️ MCPHub Thumbnail Converter</h1>
+        
+        <div class="instructions">
+            <h3>📋 Instructions:</h3>
+            <ol>
+                <li>The SVG thumbnail will load automatically below</li>
+                <li>Adjust quality and size settings if needed</li>
+                <li>Click "Download as PNG" to save the thumbnail</li>
+                <li>Use the downloaded PNG for your hackathon submission</li>
+            </ol>
+        </div>
+
+        <div class="quality-controls">
+            <h3>⚙️ Export Settings:</h3>
+            <label>
+                Quality:
+                <select id="quality">
+                    <option value="1">High (1x)</option>
+                    <option value="2" selected>Ultra High (2x)</option>
+                    <option value="3">Maximum (3x)</option>
+                </select>
+            </label>
+            <label>
+                Width:
+                <input type="number" id="width" value="1200" min="400" max="2400" step="100">
+                px
+            </label>
+            <label>
+                Height:
+                <input type="number" id="height" value="630" min="300" max="1200" step="50">
+                px
+            </label>
+            <div class="size-info">
+                💡 Recommended: 1200x630px for social media sharing
+            </div>
+        </div>
+
+        <div class="thumbnail-preview">
+            <h3>🎨 Thumbnail Preview:</h3>
+            <img id="thumbnail-img" src="mcphub-thumbnail.svg" alt="MCPHub Thumbnail" />
+            <div class="size-info">
+                Current preview shows the SVG version
+            </div>
+        </div>
+
+        <div style="text-align: center;">
+            <button class="download-btn" onclick="downloadAsPNG()">
+                📥 Download as PNG
+            </button>
+            <button class="download-btn" onclick="downloadAsSVG()">
+                📄 Download Original SVG
+            </button>
+        </div>
+
+        <canvas id="canvas"></canvas>
+    </div>
+
+    <script>
+        function downloadAsPNG() {
+            const btn = event.target;
+            btn.disabled = true;
+            btn.textContent = '⏳ Converting...';
+
+            const canvas = document.getElementById('canvas');
+            const ctx = canvas.getContext('2d');
+            const img = new Image();
+            
+            const width = parseInt(document.getElementById('width').value);
+            const height = parseInt(document.getElementById('height').value);
+            const quality = parseInt(document.getElementById('quality').value);
+            
+            // Set canvas size with quality multiplier
+            canvas.width = width * quality;
+            canvas.height = height * quality;
+            
+            // Scale context for high quality
+            ctx.scale(quality, quality);
+            
+            img.onload = function() {
+                // Clear canvas with white background
+                ctx.fillStyle = 'white';
+                ctx.fillRect(0, 0, width, height);
+                
+                // Draw the SVG image
+                ctx.drawImage(img, 0, 0, width, height);
+                
+                // Convert to PNG and download
+                canvas.toBlob(function(blob) {
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `mcphub-thumbnail-${width}x${height}.png`;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                    
+                    // Reset button
+                    btn.disabled = false;
+                    btn.textContent = '📥 Download as PNG';
+                }, 'image/png', 0.95);
+            };
+            
+            img.onerror = function() {
+                alert('Error loading SVG. Please make sure the mcphub-thumbnail.svg file exists.');
+                btn.disabled = false;
+                btn.textContent = '📥 Download as PNG';
+            };
+            
+            // Load the SVG
+            img.src = 'mcphub-thumbnail.svg?' + new Date().getTime(); // Cache bust
+        }
+
+        function downloadAsSVG() {
+            const a = document.createElement('a');
+            a.href = 'mcphub-thumbnail.svg';
+            a.download = 'mcphub-thumbnail.svg';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+
+        // Update height proportionally when width changes
+        document.getElementById('width').addEventListener('input', function() {
+            const width = parseInt(this.value);
+            const height = Math.round(width * 630 / 1200); // Maintain 1200:630 ratio
+            document.getElementById('height').value = height;
+        });
+
+        // Update width proportionally when height changes
+        document.getElementById('height').addEventListener('input', function() {
+            const height = parseInt(this.value);
+            const width = Math.round(height * 1200 / 630); // Maintain 1200:630 ratio
+            document.getElementById('width').value = width;
+        });
+    </script>
+</body>
+</html>
