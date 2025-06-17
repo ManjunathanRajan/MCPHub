@@ -61,10 +61,10 @@ Open your browser
 Navigate to `http://localhost:5173`
 
 Available Scripts
-`npm run dev` - Start development server
-`npm run build` - Build for production
-`npm run preview` - Preview production build
-`npm run lint` - Run ESLint
+`npm run dev` - Start development server<br>
+`npm run build` - Build for production<br>
+`npm run preview` - Preview production build<br>
+`npm run lint` - Run ESLint<br>
 
 #### Environment Variables
 | Variable | Description | Required |
@@ -74,17 +74,17 @@ Available Scripts
 
 #### Database Setup
 The application uses Supabase with the following main tables:
-mcp_servers - Server registry
-user_favorites - User favorites
-server_installations - Installation tracking
-security_scan_results - Security scan data
-server_reputation - Trust scores
+mcp_servers - Server registry<br>
+user_favorites - User favorites<br>
+server_installations - Installation tracking<br>
+security_scan_results - Security scan data<br>
+server_reputation - Trust scores<br>
 
 #### Contributing
-Fork the repository
-Create a feature branch
-Make your changes
-Run tests and linting
+Fork the repository<br>
+Create a feature branch<br>
+Make your changes<br>
+Run tests and linting<br>
 Submit a pull request
 
 #### Support
