@@ -11,12 +11,12 @@ MCPHub is a comprehensive platform for discovering, installing, and managing MCP
 - Analytics: Performance metrics and usage insights<br>
 
 #### Features
-🔍 Smart Discovery - Advanced search with filters and recommendations<br>
-🛡️ Security First - Automated vulnerability scanning and trust scoring<br>
-⚡ Orchestration - Chain servers together with visual workflow builder<br>
-📊 Analytics - Real-time performance and usage monitoring<br>
-🌙 Dark Mode - Beautiful UI with light/dark theme support<br>
-🔐 User Management - Favorites, installations, and personal settings<br>
+- 🔍 Smart Discovery - Advanced search with filters and recommendations<br>
+- 🛡️ Security First - Automated vulnerability scanning and trust scoring<br>
+- ⚡ Orchestration - Chain servers together with visual workflow builder<br>
+- 📊 Analytics - Real-time performance and usage monitoring<br>
+- 🌙 Dark Mode - Beautiful UI with light/dark theme support<br>
+- 🔐 User Management - Favorites, installations, and personal settings<br>
 
 #### Tech Stack
 - Frontend: React 18, TypeScript, Tailwind CSS<br>
