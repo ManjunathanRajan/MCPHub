@@ -73,19 +73,19 @@ Available Scripts
 | VITE_SUPABASE_ANON_KEY | Your Supabase anonymous key | Yes |
 
 #### Database Setup
-The application uses Supabase with the following main tables:
-mcp_servers - Server registry<br>
-user_favorites - User favorites<br>
-server_installations - Installation tracking<br>
-security_scan_results - Security scan data<br>
-server_reputation - Trust scores<br>
+The application uses Supabase with the following main tables:<br>
+- mcp_servers - Server registry<br>
+- user_favorites - User favorites<br>
+- server_installations - Installation tracking<br>
+- security_scan_results - Security scan data<br>
+- server_reputation - Trust scores<br>
 
 #### Contributing
-Fork the repository<br>
-Create a feature branch<br>
-Make your changes<br>
-Run tests and linting<br>
-Submit a pull request
+- Fork the repository<br>
+- Create a feature branch<br>
+- Make your changes<br>
+- Run tests and linting<br>
+- Submit a pull request
 
 #### Support
 For issues and questions, please open a GitHub issue.
